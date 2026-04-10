@@ -23,4 +23,4 @@ class CheckoutPage {
     }
   }
   
-  export default new CheckoutPage();
+export default new CheckoutPage();
