@@ -1,6 +1,10 @@
 import InventoryPage from "../pages/InventoryPage";
 import CartPage from "../pages/CartPage";
 import CheckoutPage from "../pages/CheckoutPage";
+import {
+  generateRandomString,
+  generateRandomInteger
+} from "../support/utils";
 
 describe("Checkout Flow", () => {
   it("should complete checkout successfully", () => {
@@ -12,7 +16,20 @@ describe("Checkout Flow", () => {
     CartPage.verifySelectedProductInCart();
     CartPage.clickCheckout();
 
-    CheckoutPage.fillInformation("QA", "Engineer", "12345");
+    const firstName = generateRandomString(6);
+    const lastName = generateRandomString(8);
+    const postalCode = generateRandomInteger();
+
+    cy.log(`First Name: ${firstName}`);
+    cy.log(`Last Name: ${lastName}`);
+    cy.log(`Postal Code: ${postalCode}`);
+
+    CheckoutPage.fillInformation(
+      firstName,
+      lastName,
+      postalCode
+    );
+
     CheckoutPage.continueCheckout();
     CheckoutPage.finishCheckout();
 
