@@ -11,7 +11,6 @@ Automation test solution for SauceDemo using **Cypress + POM + Custom Commands**
 - Login positive & negative scenarios
 - Add product to cart
 - End-to-end checkout flow
-- Negative checkout validations
 
 ## Run Project
 ```bash
