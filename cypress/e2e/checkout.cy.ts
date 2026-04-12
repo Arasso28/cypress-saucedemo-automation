@@ -1,6 +1,7 @@
 import InventoryPage from "../pages/InventoryPage";
 import CartPage from "../pages/CartPage";
 import CheckoutPage from "../pages/CheckoutPage";
+import { CheckoutAssertions } from "../support/assertions/checkoutAssertions";
 import {
   generateRandomString,
   generateRandomInteger
@@ -29,14 +30,14 @@ describe("Checkout Flow", () => {
     cy.allure().step("Continue checkout", true);
     CheckoutPage.continueCheckout();
 
-    cy.get(".summary_info")
-      .should("be.visible");
+    cy.allure().step("Verify checkout step two", true);
+    CheckoutAssertions.verifyCheckoutStepTwo();
 
     cy.allure().step("Finish order", true);
     CheckoutPage.finishCheckout();
 
     cy.allure().step("Verify success message", true);
-    CheckoutPage.verifySuccessMessage();
+    CheckoutAssertions.verifySuccessMessage();
 
     CheckoutPage.backHome();
   });

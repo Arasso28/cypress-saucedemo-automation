@@ -1,8 +1,11 @@
-import negativeCases from "../fixtures/checkoutNegativeCases.json";
+import negativeCasesJson from "../fixtures/checkoutNegativeCases.json";
 import CheckoutPage from "../pages/CheckoutPage";
 import { CheckoutAssertions } from "../support/assertions/checkoutAssertions";
 import { prepareCheckoutStepOne } from "../support/checkout-helper";
 import { TAGS } from "../support/helpers/tags";
+import type { CheckoutNegativeFixture } from "../types/fixtures";
+
+const negativeCases = negativeCasesJson as readonly CheckoutNegativeFixture[];
 
 describe("Checkout Negative Scenarios", () => {
   beforeEach(() => {

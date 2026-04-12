@@ -1,6 +1,9 @@
+import edgeCasesJson from "../fixtures/checkoutEdgeCases.json";
 import CheckoutPage from "../pages/CheckoutPage";
-import edgeCases from "../fixtures/checkoutEdgeCases.json";
 import { prepareCheckoutStepOne } from "../support/checkout-helper";
+import type { CheckoutEdgeFixture } from "../types/fixtures";
+
+const edgeCases = edgeCasesJson as readonly CheckoutEdgeFixture[];
 
 describe("Data-Driven Checkout Edge Scenarios", () => {
   beforeEach(() => {
@@ -21,10 +24,7 @@ describe("Data-Driven Checkout Edge Scenarios", () => {
       CheckoutPage.continueCheckout();
 
       cy.allure().step("Verify navigation", true);
-      cy.url().should(
-        "include",
-        testCase.expectedUrl
-      );
+      cy.url().should("include", testCase.expectedUrl);
     });
   });
 });

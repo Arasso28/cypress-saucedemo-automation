@@ -1,6 +1,12 @@
-import loginUsers from "../fixtures/loginUsers.json";
+import loginUsersJson from "../fixtures/loginUsers.json";
 import { LoginAssertions } from "../support/assertions/loginAssertions";
 import { TAGS } from "../support/helpers/tags";
+import type {
+  LoginScenarioFixture,
+  SauceDemoUsers
+} from "../types/fixtures";
+
+const loginUsers = loginUsersJson as readonly LoginScenarioFixture[];
 
 describe("Login Scenarios", () => {
   beforeEach(() => {
@@ -14,9 +20,10 @@ describe("Login Scenarios", () => {
 
     it(`${tag} ${testCase.testId} - ${testCase.description}`, () => {
       cy.env(["users"]).then(({ users }) => {
-        const username = users[testCase.usernameKey];
+        const typedUsers = users as SauceDemoUsers;
+        const username = typedUsers[testCase.usernameKey];
 
-        cy.loginAs(username);
+        cy.loginAs(username, { visit: false });
 
         if (testCase.expectedSuccess) {
           LoginAssertions.verifySuccessfulLogin();

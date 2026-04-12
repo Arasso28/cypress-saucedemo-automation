@@ -1,5 +1,6 @@
 import InventoryPage from "../pages/InventoryPage";
 import CartPage from "../pages/CartPage";
+import { CartAssertions } from "../support/assertions/cartAssertions";
 
 describe("Cart Scenarios", () => {
   beforeEach(() => {
@@ -11,8 +12,7 @@ describe("Cart Scenarios", () => {
     InventoryPage.selectFirstProduct();
 
     cy.allure().step("Verify cart badge", true);
-    cy.get(".shopping_cart_badge")
-      .should("have.text", "1");
+    CartAssertions.verifyCartBadge("1");
 
     cy.allure().step("Go to cart", true);
     InventoryPage.goToCart();

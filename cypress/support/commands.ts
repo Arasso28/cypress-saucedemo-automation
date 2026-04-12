@@ -1,35 +1,44 @@
+import type { SauceDemoUsers } from "../types/fixtures";
+import { loginSelectors } from "./selectors";
+
 declare global {
   namespace Cypress {
     interface Chainable {
-      loginAs(username: string): Chainable<void>;
+      loginAs(
+        username: string,
+        options?: { visit?: boolean }
+      ): Chainable<void>;
       loginAsStandardUser(): Chainable<void>;
     }
   }
 }
 
-Cypress.Commands.add("loginAs", (username: string) => {
-  cy.visit("/");
+Cypress.Commands.add("loginAs", (username: string, options = {}) => {
+  const { visit = true } = options;
+  if (visit) {
+    cy.visit("/");
+  }
 
-  cy.get("#user-name")
+  cy.get(loginSelectors.username)
     .should("be.visible")
     .clear()
     .type(username);
 
   cy.env(["password"]).then(({ password }) => {
-    cy.get("#password")
+    cy.get(loginSelectors.password)
       .should("be.visible")
       .clear()
       .type(password);
   });
 
-  cy.get("#login-button")
+  cy.get(loginSelectors.submitButton)
     .should("be.visible")
     .click();
 });
 
 Cypress.Commands.add("loginAsStandardUser", () => {
   cy.env(["users"]).then(({ users }) => {
-    cy.loginAs(users.standard_user);
+    cy.loginAs((users as SauceDemoUsers).standard_user);
   });
 });
 

@@ -1,15 +1,15 @@
+import { CartAssertions } from "../support/assertions/cartAssertions";
+import { cartSelectors } from "../support/selectors";
+
 class CartPage {
-    verifySelectedProductInCart() {
-        cy.get("@selectedProduct").then((name) => {
-            cy.get(".inventory_item_name").should("have.text", name as unknown as string);
-        });
-  
-        cy.get(".cart_quantity").should("have.text", "1");
-    }
-  
-    clickCheckout() {
-        cy.get("#checkout").click();
-    }
+  verifySelectedProductInCart() {
+    CartAssertions.verifyProductName("@selectedProduct");
+    CartAssertions.verifyQuantity("1");
+  }
+
+  clickCheckout() {
+    cy.get(cartSelectors.checkoutButton).click();
+  }
 }
   
 export default new CartPage();
