@@ -1,7 +1,14 @@
-allure-report
-allure-results
+# dependencies
 node_modules/
-cypress/videos/
+
+# cypress artifacts
 cypress/screenshots/
+cypress/videos/
 cypress/reports/
+
+# allure artifacts
+allure-results/
+allure-report/
+
+# macOS
 .DS_Store
