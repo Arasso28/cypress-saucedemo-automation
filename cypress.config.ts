@@ -10,6 +10,16 @@ export default defineConfig({
     retries: {
       runMode: 2,
       openMode: 0
+    },
+
+    setupNodeEvents(on, config) {
+      require("@shelex/cypress-allure-plugin/writer")(on, config);
+      return config;
     }
+  },
+
+  env: {
+    allure: true,
+    allureResultsPath: "allure-results"
   }
 });
