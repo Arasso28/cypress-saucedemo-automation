@@ -1,29 +1,30 @@
-import CheckoutPage from "../pages/CheckoutPage";
 import negativeCases from "../fixtures/checkoutNegativeCases.json";
+import CheckoutPage from "../pages/CheckoutPage";
+import { CheckoutAssertions } from "../support/assertions/checkoutAssertions";
 import { prepareCheckoutStepOne } from "../support/checkout-helper";
+import { TAGS } from "../support/helpers/tags";
 
-describe("Data-Driven Checkout Negative Scenarios", () => {
+describe("Checkout Negative Scenarios", () => {
   beforeEach(() => {
     prepareCheckoutStepOne();
   });
 
   negativeCases.forEach((testCase) => {
-    it(`${testCase.testId} - ${testCase.description}`, () => {
-      cy.allure().step("Fill invalid checkout data", true);
+    it(
+      `${TAGS.negative} ${testCase.testId} - ${testCase.description}`,
+      () => {
+        CheckoutPage.fillInformation(
+          testCase.firstName,
+          testCase.lastName,
+          testCase.postalCode
+        );
 
-      CheckoutPage.fillInformation(
-        testCase.firstName,
-        testCase.lastName,
-        testCase.postalCode
-      );
+        CheckoutPage.continueCheckout();
 
-      cy.allure().step("Click continue", true);
-      CheckoutPage.continueCheckout();
-
-      cy.allure().step("Verify validation error", true);
-      cy.get('[data-test="error"]')
-        .should("be.visible")
-        .and("contain", testCase.expectedError);
-    });
+        CheckoutAssertions.verifyValidationError(
+          testCase.expectedError
+        );
+      }
+    );
   });
 });
