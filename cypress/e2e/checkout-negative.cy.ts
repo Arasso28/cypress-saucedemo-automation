@@ -1,36 +1,29 @@
-import InventoryPage from "../pages/InventoryPage";
-import CartPage from "../pages/CartPage";
 import CheckoutPage from "../pages/CheckoutPage";
+import negativeCases from "../fixtures/checkoutNegativeCases.json";
+import { prepareCheckoutStepOne } from "../support/checkout-helper";
 
-describe("Checkout Negative Scenarios", () => {
+describe("Data-Driven Checkout Negative Scenarios", () => {
   beforeEach(() => {
-    cy.loginAsStandardUser();
-    InventoryPage.selectFirstProduct();
-    InventoryPage.goToCart();
-    CartPage.clickCheckout();
+    prepareCheckoutStepOne();
   });
 
-  it("TC_CHECKOUT_002 - missing first name", () => {
-    CheckoutPage.fillInformation("", "Engineer", "12345");
-    CheckoutPage.continueCheckout();
+  negativeCases.forEach((testCase) => {
+    it(`${testCase.testId} - ${testCase.description}`, () => {
+      cy.allure().step("Fill invalid checkout data", true);
 
-    cy.get('[data-test="error"]')
-      .should("contain", "First Name is required");
-  });
+      CheckoutPage.fillInformation(
+        testCase.firstName,
+        testCase.lastName,
+        testCase.postalCode
+      );
 
-  it("TC_CHECKOUT_003 - missing last name", () => {
-    CheckoutPage.fillInformation("QA", "", "12345");
-    CheckoutPage.continueCheckout();
+      cy.allure().step("Click continue", true);
+      CheckoutPage.continueCheckout();
 
-    cy.get('[data-test="error"]')
-      .should("contain", "Last Name is required");
-  });
-
-  it("TC_CHECKOUT_004 - missing postal code", () => {
-    CheckoutPage.fillInformation("QA", "Engineer", "");
-    CheckoutPage.continueCheckout();
-
-    cy.get('[data-test="error"]')
-      .should("contain", "Postal Code is required");
+      cy.allure().step("Verify validation error", true);
+      cy.get('[data-test="error"]')
+        .should("be.visible")
+        .and("contain", testCase.expectedError);
+    });
   });
 });

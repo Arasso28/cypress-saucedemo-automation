@@ -1,38 +1,30 @@
 import CheckoutPage from "../pages/CheckoutPage";
-import InventoryPage from "../pages/InventoryPage";
-import CartPage from "../pages/CartPage";
+import edgeCases from "../fixtures/checkoutEdgeCases.json";
+import { prepareCheckoutStepOne } from "../support/checkout-helper";
 
-describe("Checkout Edge Cases", () => {
+describe("Data-Driven Checkout Edge Scenarios", () => {
   beforeEach(() => {
-    cy.loginAsStandardUser();
-    InventoryPage.selectFirstProduct();
-    InventoryPage.goToCart();
-    CartPage.clickCheckout();
+    prepareCheckoutStepOne();
   });
 
-  it("TC_CHECKOUT_005 - long string inputs", () => {
-    const longName = "A".repeat(255);
+  edgeCases.forEach((testCase) => {
+    it(`${testCase.testId} - ${testCase.description}`, () => {
+      cy.allure().step("Fill edge case data", true);
 
-    CheckoutPage.fillInformation(
-      longName,
-      longName,
-      "12345"
-    );
+      CheckoutPage.fillInformation(
+        testCase.firstName,
+        testCase.lastName,
+        testCase.postalCode
+      );
 
-    CheckoutPage.continueCheckout();
+      cy.allure().step("Continue checkout", true);
+      CheckoutPage.continueCheckout();
 
-    cy.url().should("include", "/checkout-step-two.html");
-  });
-
-  it("TC_CHECKOUT_006 - special characters", () => {
-    CheckoutPage.fillInformation(
-      "@#QA",
-      "!Engineer",
-      "12345"
-    );
-
-    CheckoutPage.continueCheckout();
-
-    cy.url().should("include", "/checkout-step-two.html");
+      cy.allure().step("Verify navigation", true);
+      cy.url().should(
+        "include",
+        testCase.expectedUrl
+      );
+    });
   });
 });

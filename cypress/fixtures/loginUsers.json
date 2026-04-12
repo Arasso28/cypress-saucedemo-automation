@@ -1,0 +1,33 @@
+[
+    {
+      "testId": "TC_LOGIN_001",
+      "usernameKey": "standard_user",
+      "description": "successful login with standard user",
+      "expectedSuccess": true
+    },
+    {
+      "testId": "TC_LOGIN_002",
+      "usernameKey": "locked_out_user",
+      "description": "error for locked out user",
+      "expectedSuccess": false,
+      "errorMessage": "Epic sadface: Sorry, this user has been locked out."
+    },
+    {
+      "testId": "TC_LOGIN_003",
+      "usernameKey": "performance_glitch_user",
+      "description": "successful login with delayed response",
+      "expectedSuccess": true
+    },
+    {
+      "testId": "TC_LOGIN_004",
+      "usernameKey": "problem_user",
+      "description": "successful login with ui validation",
+      "expectedSuccess": true
+    },
+    {
+      "testId": "TC_LOGIN_005",
+      "usernameKey": "visual_user",
+      "description": "successful login with visual validation",
+      "expectedSuccess": true
+    }
+  ]

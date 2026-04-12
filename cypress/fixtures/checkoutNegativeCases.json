@@ -1,0 +1,26 @@
+[
+  {
+    "testId": "TC_CHECKOUT_002",
+    "description": "missing first name",
+    "firstName": "",
+    "lastName": "Engineer",
+    "postalCode": "12345",
+    "expectedError": "First Name is required"
+  },
+  {
+    "testId": "TC_CHECKOUT_003",
+    "description": "missing last name",
+    "firstName": "QA",
+    "lastName": "",
+    "postalCode": "12345",
+    "expectedError": "Last Name is required"
+  },
+  {
+    "testId": "TC_CHECKOUT_004",
+    "description": "missing postal code",
+    "firstName": "QA",
+    "lastName": "Engineer",
+    "postalCode": "",
+    "expectedError": "Postal Code is required"
+  }
+]

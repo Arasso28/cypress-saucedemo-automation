@@ -1,0 +1,26 @@
+[
+    {
+      "testId": "TC_CHECKOUT_005",
+      "description": "long string input",
+      "firstName": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "lastName": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+      "postalCode": "12345",
+      "expectedUrl": "/checkout-step-two.html"
+    },
+    {
+      "testId": "TC_CHECKOUT_006",
+      "description": "special characters input",
+      "firstName": "@#QA",
+      "lastName": "!Engineer",
+      "postalCode": "12345",
+      "expectedUrl": "/checkout-step-two.html"
+    },
+    {
+      "testId": "TC_CHECKOUT_007",
+      "description": "numeric names",
+      "firstName": "123456",
+      "lastName": "789012",
+      "postalCode": "12345",
+      "expectedUrl": "/checkout-step-two.html"
+    }
+  ]
